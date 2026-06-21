@@ -19,8 +19,10 @@ box-sizing:border-box;
 body{
 font-family:Poppins,sans-serif;
 background:
-linear-gradient(135deg,rgba(250,247,242,.92),rgba(250,247,242,.72)),
-url("images/hero.jpg") center/cover fixed no-repeat;
+radial-gradient(circle at top left,rgba(181,58,90,.18),transparent 34%),
+radial-gradient(circle at top right,rgba(212,179,106,.24),transparent 30%),
+radial-gradient(circle at 20% 80%,rgba(91,35,51,.14),transparent 28%),
+linear-gradient(135deg,#fffaf5 0%,#f7efe9 45%,#f3e6df 100%);
 color:var(--ink);
 line-height:1.7;
 position:relative;
@@ -31,9 +33,26 @@ body::before{
 content:"";
 position:fixed;
 inset:0;
-background:linear-gradient(135deg,rgba(250,247,242,.2),rgba(250,247,242,.34));
+background:
+repeating-linear-gradient(135deg,rgba(181,58,90,.05) 0 1px,transparent 1px 22px),
+radial-gradient(circle at center,rgba(255,255,255,.4),transparent 65%);
 pointer-events:none;
 z-index:-1;
+}
+
+body::after{
+content:"";
+position:fixed;
+inset:auto -10% -22% auto;
+width:38vw;
+height:38vw;
+max-width:460px;
+max-height:460px;
+background:radial-gradient(circle,rgba(181,58,90,.16),rgba(181,58,90,0) 70%);
+filter:blur(12px);
+pointer-events:none;
+z-index:-2;
+animation:bgOrbit 18s ease-in-out infinite alternate;
 }
 
 .reveal{
@@ -451,6 +470,11 @@ color:#ffe9bb;
 @keyframes heroPatternShift{
 0%{transform:translateX(-2%) translateY(-3%) scale(1);}
 100%{transform:translateX(2%) translateY(2%) scale(1.08);}
+}
+
+@keyframes bgOrbit{
+0%{transform:translate3d(0,0,0) scale(1);opacity:.75;}
+100%{transform:translate3d(-8vw,-4vw,0) scale(1.14);opacity:1;}
 }
 
 @media(min-width:769px){
