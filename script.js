@@ -1,60 +1,108 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
 
-    const contactForm = document.getElementById("contactForm");
+const contactForm = document.getElementById("contactForm");
 
-    if (contactForm) {
-        contactForm.addEventListener("submit", function (e) {
-            e.preventDefault();
-            alert("Contact form submitted.");
-        });
-    }
+if (contactForm) {
+    contactForm.addEventListener("submit", function(e) {
+        e.preventDefault();
 
-    const studentForm = document.getElementById("studentForm");
+        alert(
+            "Contact form submitted. Connect EmailJS to receive messages in Gmail."
+        );
+    });
+}
 
-    if (studentForm) {
-        studentForm.addEventListener("submit", function (e) {
-            e.preventDefault();
-            alert("Registration received.");
-        });
-    }
+const studentForm = document.getElementById("studentForm");
 
-    const menuToggle = document.querySelector(".menu-toggle");
-    const mainNav = document.getElementById("mainNav");
+if (studentForm) {
+    studentForm.addEventListener("submit", function(e) {
+        e.preventDefault();
 
-    if (menuToggle && mainNav) {
+        alert(
+            "Registration received. Connect EmailJS or Google Sheets backend."
+        );
+    });
+}
 
-        menuToggle.addEventListener("click", function () {
+const menuToggle = document.querySelector(".menu-toggle");
+const mainNav = document.getElementById("mainNav");
+const navLinks = document.querySelectorAll("#mainNav a");
 
-            mainNav.classList.toggle("is-open");
+if (menuToggle && mainNav) {
 
-            const expanded =
-                mainNav.classList.contains("is-open");
+    menuToggle.addEventListener("click", function() {
+
+        mainNav.classList.toggle("is-open");
+
+        const isExpanded =
+            mainNav.classList.contains("is-open");
+
+        menuToggle.setAttribute(
+            "aria-expanded",
+            String(isExpanded)
+        );
+
+        menuToggle.textContent =
+            isExpanded ? "Close" : "Menu";
+    });
+
+    navLinks.forEach(function(link) {
+
+        link.addEventListener("click", function() {
+
+            mainNav.classList.remove("is-open");
 
             menuToggle.setAttribute(
                 "aria-expanded",
-                expanded
+                "false"
             );
 
-            menuToggle.textContent =
-                expanded ? "Close" : "Menu";
+            menuToggle.textContent = "Menu";
         });
+    });
+}
 
-        document.querySelectorAll("#mainNav a")
-            .forEach(function (link) {
+const revealTargets =
+document.querySelectorAll(".hero, section, footer");
 
-                link.addEventListener("click", function () {
+if ("IntersectionObserver" in window) {
 
-                    mainNav.classList.remove("is-open");
+    const revealObserver =
+    new IntersectionObserver(
 
-                    menuToggle.setAttribute(
-                        "aria-expanded",
-                        "false"
-                    );
+        function(entries, observer) {
 
-                    menuToggle.textContent = "Menu";
-                });
+            entries.forEach(function(entry) {
 
+                if (entry.isIntersecting) {
+
+                    entry.target.classList.add("is-visible");
+
+                    observer.unobserve(entry.target);
+                }
             });
-    }
+
+        },
+
+        {
+            threshold: 0.15,
+            rootMargin: "0px"
+        }
+    );
+
+    revealTargets.forEach(function(target) {
+
+        target.classList.add("reveal");
+
+        revealObserver.observe(target);
+    });
+
+} else {
+
+    revealTargets.forEach(function(target) {
+
+        target.classList.add("is-visible");
+    });
+}
 
 });
